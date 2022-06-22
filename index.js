@@ -1,54 +1,49 @@
 let taskList = [];
 const tasks = document.querySelector("#tasks");
+
+
+//This Function Add Item into taskList 
 function addItem(){
-    const task = document.querySelector('#newtask input').value;
+    let task = document.querySelector('#textField');
     if( task.length == 0){
         alert("Please Enter a Task")
     }
     else{
       const newTask = {
         id: Date.now(),
-        title: task,
-        
+        title: task.value,
       }
-      taskList.push(newTask); 
-      display(newTask);
+      taskList.push(newTask);
+      displayItems(); 
+      task.value="";  
   }
 }
 
-
+//This Function delete item from tasklist 
 function deleteItems(id){
   for(var i in taskList){
+    console.log(i);
     if(taskList[i].id==id){
       taskList.splice(i,1);
-      display2();}}
+      displayItems();
+      return;
+    }}
 }
 
-function updateItem(e){
-var n =prompt("Update Task");
+//This Function Update item. 
+function updateItem(id){
+var newTask =prompt("Update Task");
 for(var i in taskList){
-  if(taskList[i].id==e){
-    taskList[i].title=n;
-    display2();
+  if(taskList[i].id==id){
+    taskList[i].title=newTask;
+    displayItems();
+    return;
   }
  }
 }
 
-
-
-function display(newTask){
-  tasks.innerHTML += `
-  <div>
-    ${newTask.title}
-    <span><input type="button" value="Delete" onclick="deleteItems(${newTask.id})" ></span>
-    <span><input type="button" value="Update" onclick="updateItem(${newTask.id})" ></span>
-  </div>
-  `
-}
-
-
-function display2(){
-  console.log(taskList);
+//This function display items of itemsList
+function displayItems(){
  if(taskList.length==0){
    tasks.innerHTML = "";
  }else{
@@ -61,6 +56,7 @@ function display2(){
        <span><input type="button" value="Update" onclick="updateItem(${element.id})" ></span>
      </div>
      `
-    },)
+    },
+  )
  }
  }
